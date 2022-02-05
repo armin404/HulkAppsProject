@@ -11,7 +11,7 @@ const PostSchema = new mongoose.Schema({
     description: {
         type: String,
         maxlength: [5000, 'Post can not be longer than 500 characters'], //It can be longer this is just for this Test
-        required: [true, 'Write your post here']
+        required: [true, 'Please write your post here']
     },
     title_photo:{
         type:String,
@@ -20,7 +20,17 @@ const PostSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    comments:{
+        //Add comment author
+        type:[String],
+        required:[false, 'Enter your Comment'],
+        maxlength:1000,
+        trim:true,
+        date: Date.now,
+        default:''
     }
+    //Add post author to post schema 
 });
 
 module.exports = mongoose.model('Post', PostSchema);

@@ -5,7 +5,8 @@ const colors = require('colors');
 //Files
 const posts = require('./routes/posts_r'); //Route Files
 const logger = require('./middleware/logger');//Logger Files
-const connectDB = require('./config/dataBase')//DB Files
+const connectDB = require('./config/dataBase');//DB Files
+const errorHandler = require('./middleware/error');//Costum error handler
 
 //App
 const app = express();
@@ -20,8 +21,14 @@ connectDB();
 //NOTE: for development only
 app.use(logger);
 app.use(morgan('dev'));
+
 //Ruters
 app.use('/ha.api/v1/posts', posts);
+
+//Error Hendler
+app.use(errorHandler);
+
+
 
 
 
