@@ -4,6 +4,7 @@ const colors = require('colors');
 
 //Files
 const posts = require('./routes/posts_r'); //Route Files
+const comments = require('./routes/comments_r'); //Route Files
 const logger = require('./middleware/logger');//Logger Files
 const connectDB = require('./config/dataBase');//DB Files
 const errorHandler = require('./middleware/error');//Costum error handler
@@ -24,6 +25,7 @@ app.use(morgan('dev'));
 
 //Ruters
 app.use('/ha.api/v1/posts', posts);
+app.use('/ha.api/v1/comments', comments);
 
 //Error Hendler
 app.use(errorHandler);

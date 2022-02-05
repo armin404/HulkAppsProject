@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const PostSchema = new mongoose.Schema({
     title: {
@@ -8,6 +9,7 @@ const PostSchema = new mongoose.Schema({
         trim: true,//This removes empity spaces on front and back of string entered
         maxlength: [120, 'Title can not be longer than 120 characters']
     },
+    slug:String,
     description: {
         type: String,
         maxlength: [5000, 'Post can not be longer than 500 characters'], //It can be longer this is just for this Test
@@ -32,5 +34,12 @@ const PostSchema = new mongoose.Schema({
     }
     //Add post author to post schema 
 });
+
+//Create slug from the title
+PostSchema.pre('save', function(next) {
+    this.slug = slugify(this.title, {lower:true})
+    next();
+});
+
 
 module.exports = mongoose.model('Post', PostSchema);

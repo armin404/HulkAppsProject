@@ -9,8 +9,13 @@ const {
     deletePost
 } = require('../controllers/post_mech');
 
+const commentRouter = require('./comments_r');
+
 //Router setup
 const router = express.Router();
+
+//Re-route into other resource routers
+router.use('/:postId/comments', commentRouter)
 
 //Routes
 router                     //Routes that dont require id
