@@ -1,4 +1,4 @@
-
+const Post = require('../models/post_sch');
 
 
 
@@ -20,8 +20,21 @@ exports.getPost = (req, res, next) => {
 //Description     create new post
 //Route           POST /hi.api/v1/posts
 //Access          Private (User must be registerd)
-exports.createNewPost = (req, res, next) => {
-    res.status(200).json({success:true, msg:"Create new post" });
+exports.createNewPost = async (req, res, next) => {
+    
+    try {
+        const post = await Post.create(req.body);
+
+    res.status(201).json({
+        success: true,
+        data: post
+    });
+    } catch (error) {
+        res.status(400).json({
+            success:false
+        });
+    }
+    
 };
 
 //Description     update post
