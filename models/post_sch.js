@@ -22,17 +22,20 @@ const PostSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    },
-    comments:{
-        //Add comment author
-        type:[String],
-        required:[false, 'Enter your Comment'],
-        maxlength:1000,
-        trim:true,
-        date: Date.now,
-        default:''
     }
+    // comments:{
+    //     //Add comment author
+    //     type:[String],
+    //     required:[false, 'Enter your Comment'],
+    //     maxlength:1000,
+    //     trim:true,
+    //     date: Date.now,
+    //     default:''
+    // }
     //Add post author to post schema 
+},{
+    toJSON: {virtuals:true},
+    toObject: {virtuals:true}
 });
 
 //Create slug from the title
@@ -41,5 +44,12 @@ PostSchema.pre('save', function(next) {
     next();
 });
 
+//Reverse populate with virtuals
+PostSchema.virtual('comments',{
+    ref:'Comment',
+    localField:'_id',
+    foreignField:'post',
+    justOne:false
+});
 
 module.exports = mongoose.model('Post', PostSchema);

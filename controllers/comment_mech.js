@@ -1,4 +1,5 @@
 const Comment = require('../models/comment_sch');
+const Post = require('../models/post_sch');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandeler = require('../middleware/async');
 
@@ -20,4 +21,49 @@ exports.getComments = asyncHandeler(async (req, res, next) => {
     const comments = await query
   
     res.status(200).json({ success: true,numberOfComments:comments.length, data: comments });
+  });
+
+
+//Description     get all comments
+//Route           GET /hi.api/v1/comment/:id
+//Access          Public
+exports.getComment = asyncHandeler(async (req, res, next) => {
+    
+    const comment = await Comment.findById(req.params.id).populate({
+        path:'post',
+        select :'title'
+    });
+
+    if(!comment){
+        new ErrorResponse(`Comment not found with id of ${req.params.id}`, 404)
+    }
+  
+    res.status(200).json({ success: true,numberOfComments:comments.length, data: comments });
+  });
+
+
+//Description     create new comment
+//Route           POST /hi.api/v1/posts/:postId/comments
+//Access          Private (User must be registerd)
+exports.createNewComment = asyncHandeler(async (req, res, next) => {
+
+    req.body.post = req.params.postId;
+    
+    console.log(req.params.postId)
+    
+    const post = await Post.findById(req.params.postId);
+    console.log(post)
+
+
+
+    if(null){
+        new ErrorResponse(`Post not found with id of ${req.params.postId}`, 404)
+    }
+    
+    const comment = await Comment.create(req.body);
+
+    res.status(201).json({
+      success: true,
+      data: comment,
+    });
   });

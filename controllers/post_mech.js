@@ -22,7 +22,7 @@ exports.getPosts = asyncHandeler(async (req, res, next) => {
 
   queryStr = queryStr.replace(/\b(ge|gte|lt|lte|in)\b/g, match => `$${match}`);
   
-  query = Post.find(JSON.parse(queryStr)).populate('title');
+  query = Post.find(JSON.parse(queryStr)).populate('comments');
 
 
     //Pagination

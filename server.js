@@ -20,7 +20,7 @@ connectDB();
 
 //Loger
 //NOTE: for development only
-app.use(logger);
+// app.use(logger);
 app.use(morgan('dev'));
 
 //Ruters
