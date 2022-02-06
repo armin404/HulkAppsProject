@@ -1,4 +1,5 @@
 const express = require('express');
+const {protect, authorize} = require('../middleware/auth');//Works the same for other routes that we want to protect
 
 //Inporting controller files
 const {
@@ -22,7 +23,7 @@ router.use('/:postId/comments', commentRouter)
 router                     //Routes that dont require id
     .route('/')
     .get(getPosts)
-    .post(createNewPost)
+    .post(protect,authorize('publisher'), createNewPost)//This route is only one protected for testing
 
 router                    //Routes that require id
     .route('/:id')

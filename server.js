@@ -1,7 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const colors = require('colors');
-const fileupload = ('express-fileupload')
+const fileupload = ('express-fileupload');
+const cookieParser = require('cookie-parser');
 
 //Files
 const posts = require('./routes/posts_r'); //Route Files
@@ -17,6 +18,9 @@ const app = express();
 //Body parser
 app.use(express.json());
 
+//Cookie parser
+app.use(cookieParser());
+
 //DBconnection
 connectDB();
 
@@ -24,6 +28,7 @@ connectDB();
 //NOTE: for development only
 // app.use(logger);
 app.use(morgan('dev'));
+
 
 //File Upload
 // app.use(fileupload());
