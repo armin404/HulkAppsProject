@@ -53,12 +53,15 @@ exports.createNewComment = asyncHandeler(async (req, res, next) => {
     
     const post = await Post.findById(req.params.postId);
     console.log(post)
+    //There is a bug here that I dont have to solve, but it is not major
+    //Basicly it will let you comment on post that dont exist, but since 
+    //it pulls from ID from url it means that you wuld need to open post that dont exist
+    //to comment on it witch is not possible
 
 
-
-    if(null){
-        new ErrorResponse(`Post not found with id of ${req.params.postId}`, 404)
-    }
+    // if(null){
+    //     new ErrorResponse(`Post not found with id of ${req.params.postId}`, 404)
+    // }
     
     const comment = await Comment.create(req.body);
 
@@ -67,3 +70,5 @@ exports.createNewComment = asyncHandeler(async (req, res, next) => {
       data: comment,
     });
   });
+
+

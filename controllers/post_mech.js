@@ -125,5 +125,23 @@ exports.deletePost = asyncHandeler(async (req, res, next) => {
   res.status(200).json({ success: true, data: {} });
 });
 
+// //Description     Upload Photo for post
+// //Route           PUT /hi.api/v1/posts/:id/photo
+// //Access          Private (User must be registerd, User must be author of the post)
+// exports.postPhotoUpload = asyncHandeler(async (req, res, next) => {
+//   const post = await Post.findById(req.params.id);
+
+//   if (!post) {
+//     return res.status(400).json({ success: false });
+//   }
+
+//   if(!req.files){
+//     return next(
+//       new ErrorResponse(`Please upload the file`, 400)
+//     );
+//   }
+
+//   res.status(200).json({ success: true, data: {} });
+// });
 
 

@@ -6,7 +6,8 @@ const {
     getPost,
     createNewPost,
     updatePost,
-    deletePost
+    deletePost,
+    postPhotoUpload
 } = require('../controllers/post_mech');
 
 const commentRouter = require('./comments_r');
@@ -28,5 +29,9 @@ router                    //Routes that require id
     .get(getPost)
     .put(updatePost)
     .delete(deletePost)
+
+// router
+//     .route('/:id/photo')
+//     .put(postPhotoUpload)
 
 module.exports = router;

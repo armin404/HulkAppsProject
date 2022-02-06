@@ -1,10 +1,12 @@
 const express = require('express');
 const morgan = require('morgan');
 const colors = require('colors');
+const fileupload = ('express-fileupload')
 
 //Files
 const posts = require('./routes/posts_r'); //Route Files
 const comments = require('./routes/comments_r'); //Route Files
+const auth = require('./routes/auth_r'); //Route Files
 const logger = require('./middleware/logger');//Logger Files
 const connectDB = require('./config/dataBase');//DB Files
 const errorHandler = require('./middleware/error');//Costum error handler
@@ -23,9 +25,13 @@ connectDB();
 // app.use(logger);
 app.use(morgan('dev'));
 
+//File Upload
+// app.use(fileupload());
+
 //Ruters
 app.use('/ha.api/v1/posts', posts);
 app.use('/ha.api/v1/comments', comments);
+app.use('/ha.api/v1/auth', auth);
 
 //Error Hendler
 app.use(errorHandler);
