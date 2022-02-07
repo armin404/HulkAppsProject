@@ -86,6 +86,9 @@ exports.getPost = asyncHandeler(async (req, res, next) => {
 //Route           POST /hi.api/v1/posts
 //Access          Private (User must be registerd)
 exports.createNewPost = asyncHandeler(async (req, res, next) => {
+  //Add publisher
+  req.body.user=req.user.id;
+
   const post = await Post.create(req.body);
 
   res.status(201).json({
@@ -99,16 +102,24 @@ exports.createNewPost = asyncHandeler(async (req, res, next) => {
 //Route           PUT /hi.api/v1/posts/:id
 //Access          Private (User must be registerd, User must be author of the post)
 exports.updatePost = asyncHandeler(async (req, res, next) => {
-  const post = await Post.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  let post = await Post.findById(req.params.id);
 
   if (!post) {
     return next(
       new ErrorResponse(`Post not found with id of ${req.params.id}`, 404)
     );
   }
+
+  //Check if user is the publicher of the post
+  if(post.user.toString() !== req.user.id && req.user.role !== 'admin'){
+    return next(new ErrorResponse(`User ${req.params.id} is not authorized to update this post`, 404));
+  }
+
+  post = await Post.findByIdAndUpdate(req.params.id, req.body,{
+      new:true,
+      runValidators:true
+  });
+
   res.status(200).json({ success: true, data: post });
 });
 
