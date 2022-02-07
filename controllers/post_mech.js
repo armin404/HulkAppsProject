@@ -6,22 +6,17 @@ const asyncHandeler = require('../middleware/async');
 //Description     get all posts
 //Route           GET /hi.api/v1/posts
 //Access          Public
+
 exports.getPosts = asyncHandeler(async (req, res, next) => {
-  
-  /////////////////////////////////////////////////////////
-
   let query;
-
   let reqQuery = {...req.body};
-
+  //Turning Query to String
   let queryStr = JSON.stringify(req.query);
 
+  //This part is googled
   const removeFields = ['select', 'page', 'limit'];
-
   removeFields.forEach(param => delete reqQuery[param]);
-
   queryStr = queryStr.replace(/\b(ge|gte|lt|lte|in)\b/g, match => `$${match}`);
-  
   query = Post.find(JSON.parse(queryStr)).populate('comments');
 
 
@@ -50,12 +45,7 @@ exports.getPosts = asyncHandeler(async (req, res, next) => {
             limit
         }
     }
-  /////////////////////////////////////////////////////////
   
-  
-  
-    // const posts = await query();
-
   res.status(200).json({
     success: true,
     numberOfPosts: posts.length,
@@ -69,6 +59,7 @@ exports.getPosts = asyncHandeler(async (req, res, next) => {
 //Description     get single post
 //Route           GET /hi.api/v1/posts/:id
 //Access          Public
+
 exports.getPost = asyncHandeler(async (req, res, next) => {
   const post = await Post.findById(req.params.id);
 
@@ -84,10 +75,11 @@ exports.getPost = asyncHandeler(async (req, res, next) => {
 
 //Description     create new post
 //Route           POST /hi.api/v1/posts
-//Access          Private (User must be registerd)
+//Access          Private (User must be registerd as publisher)
+
 exports.createNewPost = asyncHandeler(async (req, res, next) => {
   //Add publisher
-  req.body.user=req.user.id;
+  req.body.user=req.user.id;//This will assign user ID to post model
 
   const post = await Post.create(req.body);
 
@@ -101,6 +93,7 @@ exports.createNewPost = asyncHandeler(async (req, res, next) => {
 //Description     update post
 //Route           PUT /hi.api/v1/posts/:id
 //Access          Private (User must be registerd, User must be author of the post)
+
 exports.updatePost = asyncHandeler(async (req, res, next) => {
   let post = await Post.findById(req.params.id);
 
@@ -127,6 +120,7 @@ exports.updatePost = asyncHandeler(async (req, res, next) => {
 //Description     delete post
 //Route           DELETE /hi.api/v1/posts/:id
 //Access          Private (User must be registerd, User must be author of the post)
+
 exports.deletePost = asyncHandeler(async (req, res, next) => {
   const post = await Post.findByIdAndDelete(req.params.id, req.body);
 
@@ -136,23 +130,5 @@ exports.deletePost = asyncHandeler(async (req, res, next) => {
   res.status(200).json({ success: true, data: {} });
 });
 
-// //Description     Upload Photo for post
-// //Route           PUT /hi.api/v1/posts/:id/photo
-// //Access          Private (User must be registerd, User must be author of the post)
-// exports.postPhotoUpload = asyncHandeler(async (req, res, next) => {
-//   const post = await Post.findById(req.params.id);
-
-//   if (!post) {
-//     return res.status(400).json({ success: false });
-//   }
-
-//   if(!req.files){
-//     return next(
-//       new ErrorResponse(`Please upload the file`, 400)
-//     );
-//   }
-
-//   res.status(200).json({ success: true, data: {} });
-// });
 
 

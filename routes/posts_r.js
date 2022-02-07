@@ -7,8 +7,7 @@ const {
     getPost,
     createNewPost,
     updatePost,
-    deletePost,
-    postPhotoUpload
+    deletePost
 } = require('../controllers/post_mech');
 
 const commentRouter = require('./comments_r');
@@ -20,19 +19,15 @@ const router = express.Router();
 router.use('/:postId/comments', commentRouter)
 
 //Routes
-router                     //Routes that dont require id
+router                    
     .route('/')
     .get(getPosts)
     .post(protect,authorize('publisher'), createNewPost)//This route is only one protected for testing
 
-router                    //Routes that require id
+router                   
     .route('/:id')
     .get(getPost)
     .put(updatePost)
     .delete(deletePost)
-
-// router
-//     .route('/:id/photo')
-//     .put(postPhotoUpload)
 
 module.exports = router;

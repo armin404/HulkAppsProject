@@ -6,3 +6,5 @@ const logger = (req, res, next) => {
 };
 
 module.exports = logger;
+
+//This is my logger, I used morgan for this API, but this one is still functional

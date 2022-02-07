@@ -11,7 +11,7 @@ const {
 const router = express.Router({mergeParams: true});
 
 //Routes
-router                     //Routes that dont require id
+router                     
     .route('/')
     .get(getComments)
     .post(createNewComment)
