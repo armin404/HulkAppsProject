@@ -2,6 +2,12 @@ const express = require("express");
 const morgan = require("morgan");
 const colors = require("colors");
 const cookieParser = require("cookie-parser");
+const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
+const xss = require('xss-clean');
+const hpp = require('hpp');
+const rateLimit = require('express-rate-limit');
+
 
 //Files
 const posts = require("./routes/posts_r"); //Route Files
@@ -27,6 +33,26 @@ connectDB();
 //NOTE: for development only
 // app.use(logger);   This is my logger
 app.use(morgan("dev"));
+
+//Sanitize data
+app.use(mongoSanitize());
+
+//Set security headers
+app.use(helmet());
+
+//XSS Protection
+app.use(xss());
+
+//Rate limiting
+const limiter = rateLimit({
+  windowsMs: 10*60*1000,//10 Minutes
+  max:100
+});
+
+app.use(limiter);
+
+//Prevent HPP
+app.use(hpp());
 
 //Ruters
 app.use("/ha.api/v1/posts", posts);

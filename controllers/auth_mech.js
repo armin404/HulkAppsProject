@@ -68,6 +68,21 @@ exports.getMe = asyncHandler(async (req, res, next) => {
 });
 
 
+//Description      Log user out / clear cookie
+//Route            GET /api/v1/auth/logout
+//Access           Public
+exports.logout = asyncHandler(async (req, res, next) => {
+  res.cookie('token', 'none', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    data: {},
+  });
+});
+
 //Description    Forgot password
 //Route           POST /hi.api/v1/auth/forgotpassword
 //Access          Public
