@@ -65,3 +65,13 @@
 >Xss clean
 - Node.js Connect middleware to sanitize user input coming from POST body, GET queries, and url params. Works with Express, Restify, or any other Connect app.
 
+# My thoughts on project
+
+ I loved working on this project, it was a big challenge, especially in this time frame.
+
+  I gave it my best and tried to put as much as I can in this backed in terms of quality and security.
+
+  For technology I used standard stack of Node.js, MongoDB and express.
+
+  >Time to compleate the project was around 5 days
+
