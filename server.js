@@ -20,6 +20,7 @@ const errorHandler = require("./middleware/error"); //Costum error handler
 //App
 const app = express();
 
+
 //Body parser
 app.use(express.json());
 
