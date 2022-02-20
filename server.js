@@ -8,7 +8,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const rateLimit = require('express-rate-limit');
 const dotenv = require('dotenv')
-
+const cors = require('cors')
 
 //Files
 const posts = require("./routes/posts_r"); //Route Files
@@ -24,6 +24,8 @@ const app = express();
 
 //Body parser
 app.use(express.json());
+
+app.use(cors());
 
 //Cookie parser
 app.use(cookieParser());
