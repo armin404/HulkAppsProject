@@ -7,8 +7,9 @@ const helmet = require('helmet');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const rateLimit = require('express-rate-limit');
-const dotenv = require('dotenv')
-const cors = require('cors')
+const dotenv = require('dotenv');
+const cors = require('cors');
+const path = require('path');
 
 //Files
 const posts = require("./routes/posts_r"); //Route Files
@@ -57,6 +58,8 @@ app.use(limiter);
 
 //Prevent HPP
 app.use(hpp());
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 //Ruters
 app.use("/ha.api/v1/posts", posts);
