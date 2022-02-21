@@ -12,7 +12,7 @@ const sendEmail = async (options) => {
   });
 
   const message = {
-    from: `API`,
+    from: `top`,
     to: options.email,
     subject: options.subject,
     text: options.message,
